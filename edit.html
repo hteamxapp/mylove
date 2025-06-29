@@ -2,6 +2,7 @@
   background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; flex-direction: column;
   justify-content: flex-end; z-index: 1001;">
   <div class="edit-panel" style="background: #fff; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 20px;">
+
     <input type="text" id="editLabel" placeholder="Tiêu đề">
 
     <label>Tên người 1:</label>
@@ -44,6 +45,7 @@
     <button onclick="saveEdit()">Lưu & Đóng</button>
   </div>
 </div>
+
 <script>
 function populateSelect(id, start, end, reverse = false) {
   const sel = document.getElementById(id);
@@ -57,6 +59,7 @@ function populateSelect(id, start, end, reverse = false) {
     sel.appendChild(opt);
   });
 }
+
 function initDateSelectors() {
   populateSelect("birth1Day", 1, 31);
   populateSelect("birth1Month", 1, 12);
@@ -68,5 +71,4 @@ function initDateSelectors() {
   populateSelect("loveMonth", 1, 12);
   populateSelect("loveYear", 2000, new Date().getFullYear(), true);
 }
-document.addEventListener("DOMContentLoaded", initDateSelectors);
-</script>
+                </script>
