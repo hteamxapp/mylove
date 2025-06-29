@@ -168,14 +168,128 @@
     </div>
   </div>
 </div>
+
+<!-- Nhúng 2 phần chỉnh sửa & cài đặt -->
 <div id="setting-container"></div>
 <div id="edit-container"></div>
+
 <script>
-  fetch("setting.html").then(r=>r.text()).then(t=>document.getElementById("setting-container").innerHTML = t);
-  fetch("edit.html").then(r=>r.text()).then(t=>document.getElementById("edit-container").innerHTML = t);
+  // ✅ fetch đúng chuẩn để dùng trên GitHub Pages
+  fetch("./setting.html")
+    .then(res => res.text())
+    .then(html => document.getElementById("setting-container").innerHTML = html);
+
+  fetch("./edit.html")
+    .then(res => res.text())
+    .then(html => document.getElementById("edit-container").innerHTML = html);
 </script>
+
 <script>
-  // JavaScript placeholder – sẽ được bổ sung nếu cần (ở phần sau)
+function toggleEdit() {
+  document.getElementById('editOverlay').style.display = 'flex';
+  document.getElementById('editLabel').value = document.getElementById('label').textContent;
+  document.getElementById('editName1').value = document.getElementById('name1').textContent;
+  document.getElementById('editName2').value = document.getElementById('name2').textContent;
+}
+function uploadImg(e, id) {
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    document.getElementById(id).src = evt.target.result;
+    localStorage.setItem(id, evt.target.result);
+  };
+  reader.readAsDataURL(e.target.files[0]);
+}
+function getZodiac(d, m) {
+  const signs = ["Ma Kết", "Bảo Bình", "Song Ngư", "Bạch Dương", "Kim Ngưu", "Song Tử", "Cự Giải", "Sư Tử", "Xử Nữ", "Thiên Bình", "Bọ Cạp", "Nhân Mã"];
+  const symbols = ["♑", "♒", "♓", "♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐"];
+  const last = [19,18,20,20,20,21,22,22,22,23,22,21];
+  let i = (d > last[m-1]) ? m : m-1;
+  if (i < 0) i = 11;
+  return { name: signs[i], symbol: symbols[i] };
+}
+function saveEdit() {
+  const label = document.getElementById('editLabel').value;
+  const name1 = document.getElementById('editName1').value;
+  const name2 = document.getElementById('editName2').value;
+  const gender1 = document.getElementById('editGender1').value;
+  const gender2 = document.getElementById('editGender2').value;
+  const birth1 = new Date(document.getElementById('editBirth1').value);
+  const birth2 = new Date(document.getElementById('editBirth2').value);
+  const now = new Date();
+  const age1 = now.getFullYear() - birth1.getFullYear();
+  const age2 = now.getFullYear() - birth2.getFullYear();
+  const z1 = getZodiac(birth1.getDate(), birth1.getMonth() + 1);
+  const z2 = getZodiac(birth2.getDate(), birth2.getMonth() + 1);
+  document.getElementById('label').textContent = label;
+  document.getElementById('name1').textContent = name1;
+  document.getElementById('name2').textContent = name2;
+  document.getElementById('tags1').innerHTML = `<div class='tag ${gender1}'>${gender1 === 'male' ? '♂️' : '♀️'} ${age1}</div><div class='tag'>${z1.symbol} ${z1.name}</div>`;
+  document.getElementById('tags2').innerHTML = `<div class='tag ${gender2}'>${gender2 === 'male' ? '♂️' : '♀️'} ${age2}</div><div class='tag'>${z2.symbol} ${z2.name}</div>`;
+  localStorage.setItem('label', label);
+  localStorage.setItem('name1', name1);
+  localStorage.setItem('name2', name2);
+  localStorage.setItem('gender1', gender1);
+  localStorage.setItem('gender2', gender2);
+  localStorage.setItem('birth1', document.getElementById('editBirth1').value);
+  localStorage.setItem('birth2', document.getElementById('editBirth2').value);
+  document.getElementById('editOverlay').style.display = 'none';
+}
+function toggleSettings() {
+  const p = document.getElementById("settings-panel");
+  p.style.display = p.style.display === "none" ? "block" : "none";
+}
+function applySettings() {
+  document.body.setAttribute("data-theme", document.getElementById("themeToggle").checked ? "light" : "");
+  if (document.getElementById("flowerToggle").checked) launchEffect("🌸");
+  if (document.getElementById("heartToggle").checked) launchEffect("❤️");
+  document.getElementById("settings-panel").style.display = "none";
+}
+function launchEffect(icon) {
+  setInterval(() => {
+    const el = document.createElement("div");
+    el.className = "effect";
+    el.style.left = Math.random() * 100 + "%";
+    el.textContent = icon;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+  }, 400);
+}
+function updateDays() {
+  const loveDate = new Date(localStorage.getItem('loveDate') || '2024-08-01');
+  const now = new Date();
+  const days = Math.floor((now - loveDate) / (1000 * 60 * 60 * 24));
+  document.getElementById('daysCount').textContent = days;
+  const percent = (days % 365) / 365;
+  const offset = 754 * (1 - percent);
+  document.getElementById('progressCircle').style.strokeDashoffset = offset;
+}
+function loadData() {
+  ['label','name1','name2'].forEach(id => {
+    if (localStorage.getItem(id)) document.getElementById(id).textContent = localStorage.getItem(id);
+  });
+  if (localStorage.getItem('avatar1')) document.getElementById('avatar1').src = localStorage.getItem('avatar1');
+  if (localStorage.getItem('avatar2')) document.getElementById('avatar2').src = localStorage.getItem('avatar2');
+  if (localStorage.getItem('birth1')) document.getElementById('editBirth1').value = localStorage.getItem('birth1');
+  if (localStorage.getItem('birth2')) document.getElementById('editBirth2').value = localStorage.getItem('birth2');
+  if (localStorage.getItem('gender1')) document.getElementById('editGender1').value = localStorage.getItem('gender1');
+  if (localStorage.getItem('gender2')) document.getElementById('editGender2').value = localStorage.getItem('gender2');
+  if (localStorage.getItem('birth1') && localStorage.getItem('gender1')) {
+    const b1 = new Date(localStorage.getItem('birth1'));
+    const age1 = new Date().getFullYear() - b1.getFullYear();
+    const z1 = getZodiac(b1.getDate(), b1.getMonth() + 1);
+    const g1 = localStorage.getItem('gender1');
+    document.getElementById('tags1').innerHTML = `<div class='tag ${g1}'>${g1 === 'male' ? '♂️' : '♀️'} ${age1}</div><div class='tag'>${z1.symbol} ${z1.name}</div>`;
+  }
+  if (localStorage.getItem('birth2') && localStorage.getItem('gender2')) {
+    const b2 = new Date(localStorage.getItem('birth2'));
+    const age2 = new Date().getFullYear() - b2.getFullYear();
+    const z2 = getZodiac(b2.getDate(), b2.getMonth() + 1);
+    const g2 = localStorage.getItem('gender2');
+    document.getElementById('tags2').innerHTML = `<div class='tag ${g2}'>${g2 === 'male' ? '♂️' : '♀️'} ${age2}</div><div class='tag'>${z2.symbol} ${z2.name}</div>`;
+  }
+  updateDays();
+}
+window.onload = loadData;
 </script>
 </body>
 </html>
