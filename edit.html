@@ -1,0 +1,20 @@
+<div id="editOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; flex-direction: column; justify-content: flex-end; z-index: 1001;">
+  <div class="edit-panel" style="background: #fff; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 20px;">
+    <input type="text" id="editLabel" placeholder="Tiêu đề">
+    <input type="text" id="editName1" placeholder="Tên người 1">
+    <select id="editGender1">
+      <option value="male">Nam</option>
+      <option value="female">Nữ</option>
+    </select>
+    <input type="date" id="editBirth1">
+    <input type="file" accept="image/*" onchange="uploadImg(event, 'avatar1')">
+    <input type="text" id="editName2" placeholder="Tên người 2">
+    <select id="editGender2">
+      <option value="female">Nữ</option>
+      <option value="male">Nam</option>
+    </select>
+    <input type="date" id="editBirth2">
+    <input type="file" accept="image/*" onchange="uploadImg(event, 'avatar2')">
+    <button onclick="saveEdit()">Lưu & Đóng</button>
+  </div>
+</div>
