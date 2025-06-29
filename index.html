@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Đếm Ngày Yêu</title>
   <style>
     :root {
@@ -169,7 +169,6 @@
   </div>
 </div>
 
-<!-- Load popup edit và setting -->
 <div id="edit-container"></div>
 <div id="setting-container"></div>
 
@@ -252,6 +251,7 @@ function saveEdit() {
   localStorage.setItem('loveDate', loveDate.toISOString());
 
   document.getElementById('editOverlay').style.display = 'none';
+  updateDays();
 }
 function updateDays() {
   const loveDate = new Date(localStorage.getItem('loveDate') || '2024-08-01');
