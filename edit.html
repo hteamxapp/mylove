@@ -13,9 +13,7 @@
       <option value="female">Nữ</option>
     </select>
     <label>Ngày sinh:</label><br>
-    <select id="birth1Day"></select>
-    <select id="birth1Month"></select>
-    <select id="birth1Year"></select><br>
+    <input type="date" id="birth1Date"><br>
     <label>Ảnh đại diện:</label>
     <input type="file" accept="image/*" onchange="uploadImg(event, 'avatar1')">
 
@@ -27,17 +25,13 @@
       <option value="male">Nam</option>
     </select>
     <label>Ngày sinh:</label><br>
-    <select id="birth2Day"></select>
-    <select id="birth2Month"></select>
-    <select id="birth2Year"></select><br>
+    <input type="date" id="birth2Date"><br>
     <label>Ảnh đại diện:</label>
     <input type="file" accept="image/*" onchange="uploadImg(event, 'avatar2')">
 
     <hr>
     <label>Ngày bắt đầu yêu:</label><br>
-    <select id="loveDay"></select>
-    <select id="loveMonth"></select>
-    <select id="loveYear"></select><br>
+    <input type="date" id="loveDate"><br>
 
     <label>Ảnh nền:</label>
     <input type="file" accept="image/*" onchange="uploadImg(event, 'backgroundImg')">
@@ -45,30 +39,3 @@
     <button onclick="saveEdit()">Lưu & Đóng</button>
   </div>
 </div>
-
-<script>
-function populateSelect(id, start, end, reverse = false) {
-  const sel = document.getElementById(id);
-  sel.innerHTML = "";
-  const range = Array.from({length: end - start + 1}, (_, i) => start + i);
-  if (reverse) range.reverse();
-  range.forEach(v => {
-    const opt = document.createElement("option");
-    opt.value = v;
-    opt.textContent = v;
-    sel.appendChild(opt);
-  });
-}
-
-function initDateSelectors() {
-  populateSelect("birth1Day", 1, 31);
-  populateSelect("birth1Month", 1, 12);
-  populateSelect("birth1Year", 1950, new Date().getFullYear(), true);
-  populateSelect("birth2Day", 1, 31);
-  populateSelect("birth2Month", 1, 12);
-  populateSelect("birth2Year", 1950, new Date().getFullYear(), true);
-  populateSelect("loveDay", 1, 31);
-  populateSelect("loveMonth", 1, 12);
-  populateSelect("loveYear", 2000, new Date().getFullYear(), true);
-}
-                </script>
