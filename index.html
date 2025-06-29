@@ -169,12 +169,19 @@
   </div>
 </div>
 
-<!-- Load các phần giao diện ngoài -->
+<!-- Load popup edit và setting -->
 <div id="edit-container"></div>
 <div id="setting-container"></div>
 <script>
-  fetch("./edit.html").then(r => r.text()).then(t => document.getElementById("edit-container").innerHTML = t);
-  fetch("./setting.html").then(r => r.text()).then(t => document.getElementById("setting-container").innerHTML = t);
+  fetch("./edit.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("edit-container").innerHTML = html;
+      if (typeof initDateSelectors === "function") initDateSelectors();
+    });
+  fetch("./setting.html")
+    .then(res => res.text())
+    .then(html => document.getElementById("setting-container").innerHTML = html);
 </script>
 
 <script>
