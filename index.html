@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đếm Ngày Yêu</title>
+  <style>
+    :root {
+      --main-color: #ff80ab;
+      --secondary-color: #ce93d8;
+      --text-dark: #333;
+      --text-light: #fff;
+      --badge-bg: #fce4ec;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--text-dark);
+    }
+    .overlay {
+      background: rgba(255, 255, 255, 0.85);
+      min-height: 100vh;
+      padding: 30px 20px;
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+    .top-buttons {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .top-buttons button {
+      padding: 6px 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .title {
+      font-size: 24px;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .circle {
+      width: 260px;
+      height: 260px;
+      margin: 20px auto;
+      position: relative;
+    }
+    .circle svg {
+      transform: rotate(-90deg);
+    }
+    .circle .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .center-text .label {
+      font-size: 18px;
+      color: var(--text-dark);
+    }
+    .center-text .days {
+      font-size: 48px;
+      font-weight: bold;
+    }
+    .center-text .unit {
+      font-size: 14px;
+    }
+    .profiles {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 30px;
+    }
+    .profile {
+      text-align: center;
+    }
+    .avatar-wrapper {
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--main-color), var(--secondary-color));
+      display: inline-block;
+    }
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid white;
+    }
+    .nickname {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    .tags {
+      margin-top: 4px;
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 12px;
+      background: var(--badge-bg);
+      padding: 3px 6px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .tag.male { background: #e1f5fe; }
+    .tag.female { background: #fce4ec; }
+    .heart {
+      font-size: 24px;
+      color: var(--main-color);
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="overlay">
+  <div class="top-buttons">
+    <button onclick="toggleEdit()">✏️</button>
+    <button onclick="toggleSettings()">⚙️</button>
+  </div>
+  <div class="title">💖 Đếm Ngày Yêu 💖</div>
+  <div class="circle">
+    <svg width="260" height="260">
+      <circle cx="130" cy="130" r="120" stroke="#eee" stroke-width="10" fill="none" />
+      <circle id="progressCircle" cx="130" cy="130" r="120" stroke="url(#grad1)" stroke-width="10" fill="none" stroke-dasharray="754" stroke-dashoffset="754" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#f48fb1;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#ce93d8;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="center-text">
+      <div class="label" id="label">Bám nhau</div>
+      <div class="days" id="daysCount">0</div>
+      <div class="unit">Ngày</div>
+    </div>
+  </div>
+  <div class="profiles">
+    <div class="profile">
+      <div class="avatar-wrapper">
+        <img id="avatar1" class="avatar" src="">
+      </div>
+      <div class="nickname" id="name1">Cánh cụt cụt cánh 🐧</div>
+      <div class="tags" id="tags1"></div>
+    </div>
+    <div class="heart">❤️</div>
+    <div class="profile">
+      <div class="avatar-wrapper">
+        <img id="avatar2" class="avatar" src="">
+      </div>
+      <div class="nickname" id="name2">Khủng long khủng lồ 🦖</div>
+      <div class="tags" id="tags2"></div>
+    </div>
+  </div>
+</div>
+<div id="setting-container"></div>
+<div id="edit-container"></div>
+<script>
+  fetch("setting.html").then(r=>r.text()).then(t=>document.getElementById("setting-container").innerHTML = t);
+  fetch("edit.html").then(r=>r.text()).then(t=>document.getElementById("edit-container").innerHTML = t);
+</script>
+<script>
+  // JavaScript placeholder – sẽ được bổ sung nếu cần (ở phần sau)
+</script>
+</body>
+</html>
